@@ -1,6 +1,8 @@
-﻿namespace SupplyManagement.Contracts
+﻿using SupplyManagement.Models;
+
+namespace SupplyManagement.Contracts
 {
-    public interface IProjectRepository
+    public interface IProjectRepository : IGeneralRepository<Project>
     {
 
     }

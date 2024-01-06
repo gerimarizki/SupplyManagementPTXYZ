@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SupplyManagement.DTOs.User;
-using SupplyManagement.DTOs.Vendor;
+using SupplyManagement.DTOs.Project;
 using SupplyManagement.Handlers;
 using SupplyManagement.Services;
 using System.Net;
@@ -8,12 +7,12 @@ using System.Net;
 namespace SupplyManagement.Controllers
 {
     [ApiController]
-    [Route("Api/Vendor")]
-    public class VendorController : ControllerBase
+    [Route("Api/Project")]
+    public class ProjectController : ControllerBase
     {
-        private readonly VendorServices _services;
+        private readonly ProjectServices _services;
 
-        public VendorController(VendorServices services)
+        public ProjectController(ProjectServices services)
         {
             _services = services;
         }
@@ -21,11 +20,11 @@ namespace SupplyManagement.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var entities = _services.GetVendor();
+            var entities = _services.GetProject();
 
             if (entities == null)
             {
-                return NotFound(new HandlerForResponse<GetVendorDTO>
+                return NotFound(new HandlerForResponse<GetProjectDTO>
                 {
                     Code = StatusCodes.Status404NotFound,
                     Status = HttpStatusCode.NotFound.ToString(),
@@ -33,7 +32,7 @@ namespace SupplyManagement.Controllers
                 });
             }
 
-            return Ok(new HandlerForResponse<IEnumerable<GetVendorDTO>>
+            return Ok(new HandlerForResponse<IEnumerable<GetProjectDTO>>
             {
                 Code = StatusCodes.Status200OK,
                 Status = HttpStatusCode.OK.ToString(),
@@ -45,10 +44,10 @@ namespace SupplyManagement.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            var vendor = _services.GetVendorID(id);
+            var vendor = _services.GetProjectID(id);
             if (vendor is null)
             {
-                return NotFound(new HandlerForResponse<GetVendorDTO>
+                return NotFound(new HandlerForResponse<GetProjectDTO>
                 {
                     Code = StatusCodes.Status404NotFound,
                     Status = HttpStatusCode.NotFound.ToString(),
@@ -56,7 +55,7 @@ namespace SupplyManagement.Controllers
                 });
             }
 
-            return Ok(new HandlerForResponse<GetVendorDTO>
+            return Ok(new HandlerForResponse<GetProjectDTO>
             {
                 Code = StatusCodes.Status200OK,
                 Status = HttpStatusCode.OK.ToString(),
@@ -66,12 +65,12 @@ namespace SupplyManagement.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(NewVendorDTO newVendor)
+        public IActionResult Create(NewProjectDTO newProject)
         {
-            var createNewVendor = _services.CreateVendor(newVendor);
-            if (createNewVendor is null)
+            var createNewProject = _services.CreateProject(newProject);
+            if (createNewProject is null)
             {
-                return BadRequest(new HandlerForResponse<GetVendorDTO>
+                return BadRequest(new HandlerForResponse<GetProjectDTO>
                 {
                     Code = StatusCodes.Status400BadRequest,
                     Status = HttpStatusCode.BadRequest.ToString(),
@@ -79,22 +78,22 @@ namespace SupplyManagement.Controllers
                 });
             }
 
-            return Ok(new HandlerForResponse<GetVendorDTO>
+            return Ok(new HandlerForResponse<GetProjectDTO>
             {
                 Code = StatusCodes.Status200OK,
                 Status = HttpStatusCode.OK.ToString(),
                 Message = "Successfully created",
-                Data = createNewVendor
+                Data = createNewProject
             });
         }
 
         [HttpPut]
-        public IActionResult Update(UpdateVendorDTO updateVendorDTO)
+        public IActionResult Update(UpdateProjectDTO updateProjectDTO)
         {
-            var update = _services.UpdateVendor(updateVendorDTO);
+            var update = _services.UpdateProject(updateProjectDTO);
             if (update is -1)
             {
-                return NotFound(new HandlerForResponse<UpdateVendorDTO>
+                return NotFound(new HandlerForResponse<UpdateProjectDTO>
                 {
                     Code = StatusCodes.Status404NotFound,
                     Status = HttpStatusCode.NotFound.ToString(),
@@ -103,14 +102,14 @@ namespace SupplyManagement.Controllers
             }
             if (update is 0)
             {
-                return BadRequest(new HandlerForResponse<UpdateVendorDTO>
+                return BadRequest(new HandlerForResponse<UpdateProjectDTO>
                 {
                     Code = StatusCodes.Status500InternalServerError,
                     Status = HttpStatusCode.InternalServerError.ToString(),
                     Message = "Check your data"
                 });
             }
-            return Ok(new HandlerForResponse<UpdateVendorDTO>
+            return Ok(new HandlerForResponse<UpdateProjectDTO>
             {
                 Code = StatusCodes.Status200OK,
                 Status = HttpStatusCode.OK.ToString(),
@@ -121,11 +120,11 @@ namespace SupplyManagement.Controllers
         [HttpDelete]
         public IActionResult Delete(int id)
         {
-            var delete = _services.DeleteVendor(id);
+            var delete = _services.DeleteProject(id);
 
             if (delete is -1)
             {
-                return NotFound(new HandlerForResponse<GetVendorDTO>
+                return NotFound(new HandlerForResponse<GetProjectDTO>
                 {
                     Code = StatusCodes.Status404NotFound,
                     Status = HttpStatusCode.NotFound.ToString(),
@@ -134,7 +133,7 @@ namespace SupplyManagement.Controllers
             }
             if (delete is 0)
             {
-                return BadRequest(new HandlerForResponse<GetVendorDTO>
+                return BadRequest(new HandlerForResponse<GetProjectDTO>
                 {
                     Code = StatusCodes.Status500InternalServerError,
                     Status = HttpStatusCode.InternalServerError.ToString(),
@@ -142,7 +141,7 @@ namespace SupplyManagement.Controllers
                 });
             }
 
-            return Ok(new HandlerForResponse<GetVendorDTO>
+            return Ok(new HandlerForResponse<GetProjectDTO>
             {
                 Code = StatusCodes.Status200OK,
                 Status = HttpStatusCode.OK.ToString(),

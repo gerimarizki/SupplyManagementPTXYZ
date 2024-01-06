@@ -57,7 +57,7 @@ namespace SupplyManagement.Services
             return toDto; // Vendor found
         }
 
-        public GetVendorDTO? CreateCompany(NewVendorDTO newvVendorDTO)
+        public GetVendorDTO? CreateVendor(NewVendorDTO newvVendorDTO)
         {
             var vendor = new Vendor
             {
@@ -86,7 +86,7 @@ namespace SupplyManagement.Services
             return toDto; // Vendor created
         }
 
-        public int UpdateCompany(UpdateVendorDTO updateVendorDTO)
+        public int UpdateVendor(UpdateVendorDTO updateVendorDTO)
         {
             var isExist = _vendorRepository.IsExist(updateVendorDTO.VendorID);
             if (!isExist)

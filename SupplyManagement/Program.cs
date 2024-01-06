@@ -20,6 +20,7 @@ builder.Services.AddDbContext<BookingDbContext>(options => options.UseMySql(conn
 builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
 builder.Services.AddScoped<IManagerLogistic, ManagerLogisticsRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 builder.Services.AddScoped<IVendorRepository, VendorRepository>();
 
 // Add Service to the container
@@ -28,6 +29,7 @@ builder.Services.AddScoped<ManagerLogisticServices>();
 builder.Services.AddScoped<UserServices>();
 builder.Services.AddScoped<VendorServices>();
 builder.Services.AddScoped<AuthenticationServices>();
+builder.Services.AddScoped<ProjectServices>();
 
 // Add Token Handler
 builder.Services.AddScoped<ITokenHandler, TokenHandler>();
