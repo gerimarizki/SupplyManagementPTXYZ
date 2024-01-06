@@ -13,9 +13,10 @@ namespace Client.Controllers
             _logger = logger;
         }
 
+
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("Login", "Auth");
         }
 
         public IActionResult Privacy()
