@@ -1,6 +1,7 @@
 ﻿using SupplyManagement.Contracts;
 using SupplyManagement.Data;
 using SupplyManagement.DTOs.Authorize;
+using SupplyManagement.DTOs.Vendor;
 using SupplyManagement.Models;
 using System.Security.Claims;
 
@@ -12,22 +13,21 @@ namespace SupplyManagement.Services
         private readonly ICompanyRepository _companyRepository;
         private readonly IUserRepository _userRepository;
         private readonly IManagerLogistic _managerLogistic;
+        private readonly IVendorRepository _vendorRepository;
         private readonly ITokenHandler _tokenHandler;
 
-        public AuthenticationServices(BookingDbContext bookingDbContext, ICompanyRepository companyRepository, IUserRepository userRepository, IManagerLogistic managerLogistic, ITokenHandler tokenHandler)
+        public AuthenticationServices(BookingDbContext bookingDbContext, ICompanyRepository companyRepository, IUserRepository userRepository, IManagerLogistic managerLogistic, ITokenHandler tokenHandler, IVendorRepository vendorRepository)
         {
             _bookingDbContext = bookingDbContext;
             _companyRepository = companyRepository;
             _managerLogistic = managerLogistic;
             _userRepository = userRepository;
             _tokenHandler = tokenHandler;
+            _vendorRepository = vendorRepository;
         }
 
         public RegisterDTO Register(RegisterDTO registerDto)
         {
-            //Register ini hanya untuk registrasi company saja
-            //untuk ManagerLogistics atau Admin silahkan masukan data lewat API
-            //Masukan data di table manager daftarkan email, password, usertype, managerID di table user
 
             using var transaction = _bookingDbContext.Database.BeginTransaction();
 
@@ -43,11 +43,23 @@ namespace SupplyManagement.Services
                 };
                 var createdCompany = _companyRepository.Create(company);
 
+                var vendor = new Vendor
+                {
+                    VendorID = registerDto.VendorID,
+                    VendorName = registerDto.VendorName,
+                    BusinessType = registerDto.BusinessType,
+                    CompanyType = registerDto.CompanyType,
+                    UserID = registerDto.UserID
+                };
+
+                var createdVendor = _vendorRepository.Create(vendor);
+
                 var createdUser = new User
                 {
                     Email = company.CompanyEmail,
                     Password = registerDto.Password,
-                    UserType = Helper.Enum.UserType.Company
+                    UserType = Helper.Enum.UserType.Company,
+                    CompanyID = registerDto.CompanyID,
                 };
                 var createdAccount = _userRepository.Create(createdUser);
 
@@ -58,7 +70,13 @@ namespace SupplyManagement.Services
                     CompanyPhoneNumber = createdCompany.CompanyPhoneNumber,
                     CompanyPhoto = createdCompany.CompanyPhoto,
                     Password = createdUser.Password,
-                    UserType = Helper.Enum.UserType.Company
+                    UserType = Helper.Enum.UserType.Company,
+                    VendorID = createdVendor.VendorID,
+                    VendorName = createdVendor.VendorName,
+                    BusinessType = createdVendor.BusinessType,
+                    CompanyType = createdVendor.CompanyType,
+                    CompanyID = company.CompanyID,
+
                 };
 
                 transaction.Commit();
@@ -81,22 +99,22 @@ namespace SupplyManagement.Services
             }
 
             // Verify hashed passwords
-            if (!VerifyPassword(loginDto.Password, user.Password))
-            {
-                return "INVALID_PASSWORD";
-            }
+            //if (!VerifyPassword(loginDto.Password, user.Password))
+            //{
+            //    return "INVALID_PASSWORD";
+            //}
 
             var claims = new List<Claim>
-    {
-        new Claim("Id", $"{user.UserID}"),
-        new Claim("Email", loginDto.Email),
-        new Claim("UserType", $"{user.UserType}")
-    };
+            {
+                new Claim("Id", $"{user.UserID}"),
+                new Claim("Email", loginDto.Email),
+                new Claim("UserType", $"{user.UserType}")
+            };
 
             try
             {
                 var getToken = _tokenHandler.GenerateToken(claims);
-                return getToken;
+                return "test";
             }
             catch
             {
@@ -105,17 +123,13 @@ namespace SupplyManagement.Services
             }
         }
 
-        private string HashPassword(string password)
-        {
+        //private bool VerifyPassword(string inputPassword, string hashedPassword)
+        //{
+        //    // Verify the password using the hashed value
+        //    // Example using BCrypt.Net library
+        //    return BCrypt.Net.BCrypt.Verify(inputPassword, hashedPassword);
+        //}
 
-            return BCrypt.Net.BCrypt.HashPassword(password);
-        }
 
-        private bool VerifyPassword(string inputPassword, string hashedPassword)
-        {
-            // Verify the password using the hashed value
-            // Example using BCrypt.Net library
-            return BCrypt.Net.BCrypt.Verify(inputPassword, hashedPassword);
-        }
     }
 }

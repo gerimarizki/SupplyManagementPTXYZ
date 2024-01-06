@@ -68,7 +68,7 @@ namespace SupplyManagement.Controllers
         [HttpPost]
         public IActionResult Create(NewUserDTO newUser)
         {
-            var createNewUser = _services.CreateNewUser(newUser);
+            var createNewUser = _services.CreateUser(newUser);
             if (createNewUser is null)
             {
                 return BadRequest(new HandlerForResponse<GetUserDTO>

@@ -23,6 +23,7 @@ namespace SupplyManagement.Models
         public int ManagerID { get; set; }
 
 
+
         //Cardinality
         public Company Company { get; set; }
         public ManagerLogistic ManagerLogistic { get; set; }

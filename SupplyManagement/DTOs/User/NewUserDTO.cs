@@ -16,5 +16,6 @@ namespace SupplyManagement.DTOs.User
 
         public int CompanyID { get; set; }
         public int ManagerID { get; set; }
+
     }
 }

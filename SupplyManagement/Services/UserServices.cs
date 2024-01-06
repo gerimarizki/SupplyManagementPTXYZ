@@ -1,6 +1,8 @@
 ﻿using SupplyManagement.Contracts;
 using SupplyManagement.DTOs.User;
+using SupplyManagement.DTOs.Vendor;
 using SupplyManagement.Models;
+using SupplyManagement.Repositories;
 
 namespace SupplyManagement.Services
 {
@@ -29,8 +31,9 @@ namespace SupplyManagement.Services
                                                     Email = user.Email,
                                                     Password = user.Password,
                                                     UserType = user.UserType,
-                                                    ManagerID = user.ManagerID,
                                                     CompanyID = user.CompanyID,
+                                                    ManagerID = user.ManagerID,
+                      
 
                                                 }).ToList();
 
@@ -51,14 +54,48 @@ namespace SupplyManagement.Services
                 Email = user.Email,
                 Password = user.Password,
                 UserType = user.UserType,
-                ManagerID = user.ManagerID,
                 CompanyID = user.CompanyID,
+                ManagerID = user.ManagerID,
+             
             };
 
             return toDto; //user found
         }
 
-        public GetUserDTO? CreateNewUser(NewUserDTO newUserDTO)
+        //public GetUserDTO? CreateNewUser(NewUserDTO newUserDTO)
+        //{
+        //    var user = new User
+        //    {
+        //        UserID = newUserDTO.UserID,
+        //        Email = newUserDTO.Email,
+        //        Password = newUserDTO.Password,
+        //        UserType = newUserDTO.UserType,
+        //        CompanyID = newUserDTO.CompanyID,
+        //        ManagerID = newUserDTO.ManagerID,
+
+        //    };
+
+        //    var createdUser = _userRepository.Create(user);
+        //    if (createdUser is null)
+        //    {
+        //        return null; // user not created
+        //    }
+
+        //    var toDto = new GetUserDTO
+        //    {
+        //        UserID = user.UserID,
+        //        Email = user.Email,
+        //        Password = user.Password,
+        //        UserType = user.UserType,
+        //        CompanyID = user.CompanyID,
+        //        ManagerID = user.ManagerID,
+
+        //    };
+
+        //    return toDto; // user created
+        //}
+
+        public GetUserDTO? CreateUser(NewUserDTO newUserDTO)
         {
             var user = new User
             {
@@ -66,14 +103,14 @@ namespace SupplyManagement.Services
                 Email = newUserDTO.Email,
                 Password = newUserDTO.Password,
                 UserType = newUserDTO.UserType,
-                ManagerID = newUserDTO.ManagerID,
                 CompanyID = newUserDTO.CompanyID,
+                ManagerID = newUserDTO.ManagerID,
             };
 
             var createdUser = _userRepository.Create(user);
             if (createdUser is null)
             {
-                return null; // user not created
+                return null; // Vendor not created
             }
 
             var toDto = new GetUserDTO
@@ -82,11 +119,11 @@ namespace SupplyManagement.Services
                 Email = user.Email,
                 Password = user.Password,
                 UserType = user.UserType,
-                ManagerID = user.ManagerID,
                 CompanyID = user.CompanyID,
+                ManagerID = user.ManagerID,
             };
 
-            return toDto; // user created
+            return toDto; // Vendor created
         }
 
         public int UpdateUser(UpdateUserDTO updateUserDTO)
@@ -105,8 +142,9 @@ namespace SupplyManagement.Services
                 Email = updateUserDTO.Email,
                 Password = updateUserDTO.Password,
                 UserType = updateUserDTO.UserType,
-                ManagerID = updateUserDTO.ManagerID,
                 CompanyID = updateUserDTO.CompanyID,
+                ManagerID = updateUserDTO.ManagerID,
+         
             };
 
             var isUpdate = _userRepository.Update(user);
