@@ -55,6 +55,7 @@ namespace SupplyManagement.Services
         {
             var manager = new ManagerLogistic
             {
+                ManagerID = newManagerLogisticDTO.ManagerID,
                 ManagerName = newManagerLogisticDTO.ManagerName,
                 ManagerEmail = newManagerLogisticDTO.ManagerEmail,
                 ManagerPhone = newManagerLogisticDTO.ManagerPhone,

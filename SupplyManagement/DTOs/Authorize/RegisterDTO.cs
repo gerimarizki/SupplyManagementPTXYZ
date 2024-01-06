@@ -16,15 +16,8 @@ namespace SupplyManagement.DTOs.Authorize
         public string CompanyPhoneNumber { get; set; }
         public string CompanyPhoto { get; set; }
 
-        public int VendorID { get; set; }
 
-        public string VendorName { get; set; }
-
-        public string BusinessType { get; set; }
-        
-        public string CompanyType { get; set; }
-
-        public int UserID { get; set; }
+        public int ManagerID { get; set; }
         
 
         [Required]

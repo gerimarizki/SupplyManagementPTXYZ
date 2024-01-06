@@ -43,23 +43,13 @@ namespace SupplyManagement.Services
                 };
                 var createdCompany = _companyRepository.Create(company);
 
-                var vendor = new Vendor
-                {
-                    VendorID = registerDto.VendorID,
-                    VendorName = registerDto.VendorName,
-                    BusinessType = registerDto.BusinessType,
-                    CompanyType = registerDto.CompanyType,
-                    UserID = registerDto.UserID
-                };
-
-                var createdVendor = _vendorRepository.Create(vendor);
-
                 var createdUser = new User
                 {
                     Email = company.CompanyEmail,
                     Password = registerDto.Password,
                     UserType = Helper.Enum.UserType.Company,
-                    CompanyID = registerDto.CompanyID,
+                    ManagerID = registerDto.ManagerID,
+                    CompanyID = company.CompanyID,
                 };
                 var createdAccount = _userRepository.Create(createdUser);
 
@@ -71,10 +61,7 @@ namespace SupplyManagement.Services
                     CompanyPhoto = createdCompany.CompanyPhoto,
                     Password = createdUser.Password,
                     UserType = Helper.Enum.UserType.Company,
-                    VendorID = createdVendor.VendorID,
-                    VendorName = createdVendor.VendorName,
-                    BusinessType = createdVendor.BusinessType,
-                    CompanyType = createdVendor.CompanyType,
+                    ManagerID = createdUser.ManagerID,
                     CompanyID = company.CompanyID,
 
                 };

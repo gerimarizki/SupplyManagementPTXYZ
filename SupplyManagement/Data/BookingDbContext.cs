@@ -73,14 +73,15 @@ namespace SupplyManagement.Data
             modelBuilder.Entity<User>()
                 .HasOne(user => user.ManagerLogistic)
                 .WithOne(manager => manager.User)
-                .HasForeignKey<ManagerLogistic>(manager => manager.ManagerID)
+                .HasForeignKey<User>(user => user.ManagerID)
                 .IsRequired(false); // User bisa tidak memiliki ManagerID
 
             // User - Vendor (One to One)
             modelBuilder.Entity<Vendor>()
                 .HasOne(vendor => vendor.User)
                 .WithOne(user => user.Vendor)
-                .HasForeignKey<User>(user => user.UserID);
+                .HasForeignKey<Vendor>(Vendor => Vendor.UserID)
+                .IsRequired(false);
 
             // Vendor - Project (One To Many)
             modelBuilder.Entity<Project>()

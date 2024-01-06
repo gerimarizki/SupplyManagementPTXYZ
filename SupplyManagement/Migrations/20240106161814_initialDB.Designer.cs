@@ -10,7 +10,7 @@ using SupplyManagement.Data;
 namespace SupplyManagement.Migrations
 {
     [DbContext(typeof(BookingDbContext))]
-    [Migration("20240106134558_initialDB")]
+    [Migration("20240106161814_initialDB")]
     partial class initialDB
     {
         /// <inheritdoc />
@@ -64,6 +64,7 @@ namespace SupplyManagement.Migrations
             modelBuilder.Entity("SupplyManagement.Models.ManagerLogistic", b =>
                 {
                     b.Property<int>("ManagerID")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("ManagerID");
 
@@ -118,6 +119,7 @@ namespace SupplyManagement.Migrations
             modelBuilder.Entity("SupplyManagement.Models.User", b =>
                 {
                     b.Property<int>("UserID")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("UserID");
 
@@ -144,6 +146,9 @@ namespace SupplyManagement.Migrations
                     b.HasKey("UserID");
 
                     b.HasIndex("CompanyID")
+                        .IsUnique();
+
+                    b.HasIndex("ManagerID")
                         .IsUnique();
 
                     b.HasIndex("UserID", "Email")
@@ -179,19 +184,13 @@ namespace SupplyManagement.Migrations
 
                     b.HasKey("VendorID");
 
+                    b.HasIndex("UserID")
+                        .IsUnique();
+
                     b.HasIndex("VendorID")
                         .IsUnique();
 
                     b.ToTable("tb_m_vendor");
-                });
-
-            modelBuilder.Entity("SupplyManagement.Models.ManagerLogistic", b =>
-                {
-                    b.HasOne("SupplyManagement.Models.User", "User")
-                        .WithOne("ManagerLogistic")
-                        .HasForeignKey("SupplyManagement.Models.ManagerLogistic", "ManagerID");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SupplyManagement.Models.Project", b =>
@@ -211,15 +210,22 @@ namespace SupplyManagement.Migrations
                         .WithOne("User")
                         .HasForeignKey("SupplyManagement.Models.User", "CompanyID");
 
-                    b.HasOne("SupplyManagement.Models.Vendor", "Vendor")
+                    b.HasOne("SupplyManagement.Models.ManagerLogistic", "ManagerLogistic")
                         .WithOne("User")
-                        .HasForeignKey("SupplyManagement.Models.User", "UserID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("SupplyManagement.Models.User", "ManagerID");
 
                     b.Navigation("Company");
 
-                    b.Navigation("Vendor");
+                    b.Navigation("ManagerLogistic");
+                });
+
+            modelBuilder.Entity("SupplyManagement.Models.Vendor", b =>
+                {
+                    b.HasOne("SupplyManagement.Models.User", "User")
+                        .WithOne("Vendor")
+                        .HasForeignKey("SupplyManagement.Models.Vendor", "UserID");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SupplyManagement.Models.Company", b =>
@@ -228,18 +234,21 @@ namespace SupplyManagement.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SupplyManagement.Models.ManagerLogistic", b =>
+                {
+                    b.Navigation("User")
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("SupplyManagement.Models.User", b =>
                 {
-                    b.Navigation("ManagerLogistic")
+                    b.Navigation("Vendor")
                         .IsRequired();
                 });
 
             modelBuilder.Entity("SupplyManagement.Models.Vendor", b =>
                 {
                     b.Navigation("Projects");
-
-                    b.Navigation("User")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
