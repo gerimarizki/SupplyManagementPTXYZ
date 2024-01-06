@@ -7,14 +7,14 @@ namespace SupplyManagement.DTOs.Authorize
     {
         //Company
         [Required]
-        public Guid CompanyID { get; set; }
+        public int CompanyID { get; set; }
         [Required]
         public string CompanyName { get; set; }
         [Required]
         public string CompanyEmail { get; set; }
         [Required]
         public string CompanyPhoneNumber { get; set; }
-        public byte[] CompanyPhoto { get; set; }
+        public string CompanyPhoto { get; set; }
 
         // ini ubuat usernya
         [Required]

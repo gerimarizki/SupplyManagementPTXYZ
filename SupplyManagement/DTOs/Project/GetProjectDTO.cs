@@ -4,13 +4,12 @@ namespace SupplyManagement.DTOs.Project
 {
     public class GetProjectDTO
     {
-        [Required]
-        public Guid ProjectID { get; set; }
 
-        [Required]
+        public int ProjectID { get; set; }
+
         public string ProjectName { get; set; }
 
-        [Required]
-        public Guid VendorID { get; set; }
+
+        public int VendorID { get; set; }
     }
 }

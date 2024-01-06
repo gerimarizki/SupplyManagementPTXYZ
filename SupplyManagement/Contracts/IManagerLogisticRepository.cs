@@ -1,4 +1,4 @@
-﻿using SupplyManagement.Model;
+﻿using SupplyManagement.Models;
 
 namespace SupplyManagement.Contracts
 {

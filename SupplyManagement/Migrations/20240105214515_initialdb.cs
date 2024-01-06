@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SupplyManagement.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialDB : Migration
+    public partial class initialdb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,144 +15,147 @@ namespace SupplyManagement.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "tb_m_companies",
+                name: "tb_m_company",
                 columns: table => new
                 {
-                    companyID = table.Column<Guid>(type: "uniqueidentifier(36)", nullable: false, collation: "ascii_general_ci"),
+                    companyID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     companyName = table.Column<string>(type: "nvarchar(100)", nullable: false),
                     companyEmail = table.Column<string>(type: "nvarchar(100)", nullable: false),
                     companyPhone = table.Column<string>(type: "nvarchar(100)", nullable: false),
                     approvalStatus = table.Column<string>(type: "nvarchar(100)", nullable: false),
-                    companyPhoto = table.Column<byte[]>(type: "varbinary(100)", nullable: false)
+                    companyPhoto = table.Column<byte[]>(type: "varbinary(255)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tb_m_companies", x => x.companyID);
+                    table.PrimaryKey("PK_tb_m_company", x => x.companyID);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "tb_m_vendors",
+                name: "tb_m_vendor",
                 columns: table => new
                 {
-                    VendorID = table.Column<Guid>(type: "uniqueidentifier(36)", nullable: false, collation: "ascii_general_ci"),
+                    VendorID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     vendorName = table.Column<string>(type: "nvarchar(100)", nullable: false),
                     businessType = table.Column<string>(type: "nvarchar(100)", nullable: false),
                     companyType = table.Column<string>(type: "nvarchar(100)", nullable: false),
-                    UserID = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                    UserID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tb_m_vendors", x => x.VendorID);
+                    table.PrimaryKey("PK_tb_m_vendor", x => x.VendorID);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "tb_m_projects",
+                name: "tb_m_project",
                 columns: table => new
                 {
-                    ProjectID = table.Column<Guid>(type: "uniqueidentifier(36)", nullable: false, collation: "ascii_general_ci"),
+                    ProjectID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     projectName = table.Column<string>(type: "nvarchar(100)", nullable: false),
-                    VendorID = table.Column<Guid>(type: "uniqueidentifier(36)", nullable: false, collation: "ascii_general_ci")
+                    VendorID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tb_m_projects", x => x.ProjectID);
+                    table.PrimaryKey("PK_tb_m_project", x => x.ProjectID);
                     table.ForeignKey(
-                        name: "FK_tb_m_projects_tb_m_vendors_VendorID",
+                        name: "FK_tb_m_project_tb_m_vendor_VendorID",
                         column: x => x.VendorID,
-                        principalTable: "tb_m_vendors",
+                        principalTable: "tb_m_vendor",
                         principalColumn: "VendorID",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "tb_m_users",
+                name: "tb_m_user",
                 columns: table => new
                 {
-                    UserID = table.Column<Guid>(type: "uniqueidentifier(36)", nullable: false, collation: "ascii_general_ci"),
+                    UserID = table.Column<int>(type: "int", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(100)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(100)", nullable: false),
                     UserType = table.Column<int>(type: "int", nullable: false),
-                    CompanyID = table.Column<Guid>(type: "uniqueidentifier(36)", nullable: false, collation: "ascii_general_ci"),
-                    ManagerID = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                    CompanyID = table.Column<int>(type: "int", nullable: false),
+                    ManagerID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tb_m_users", x => x.UserID);
+                    table.PrimaryKey("PK_tb_m_user", x => x.UserID);
                     table.ForeignKey(
-                        name: "FK_tb_m_users_tb_m_companies_CompanyID",
+                        name: "FK_tb_m_user_tb_m_company_CompanyID",
                         column: x => x.CompanyID,
-                        principalTable: "tb_m_companies",
+                        principalTable: "tb_m_company",
                         principalColumn: "companyID");
                     table.ForeignKey(
-                        name: "FK_tb_m_users_tb_m_vendors_UserID",
+                        name: "FK_tb_m_user_tb_m_vendor_UserID",
                         column: x => x.UserID,
-                        principalTable: "tb_m_vendors",
+                        principalTable: "tb_m_vendor",
                         principalColumn: "VendorID",
                         onDelete: ReferentialAction.Cascade);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "tb_m_manager_logistics",
+                name: "tb_m_manager",
                 columns: table => new
                 {
-                    ManagerID = table.Column<Guid>(type: "uniqueidentifier(36)", nullable: false, collation: "ascii_general_ci"),
+                    ManagerID = table.Column<int>(type: "int", nullable: false),
                     managerName = table.Column<string>(type: "nvarchar(100)", nullable: false),
                     managerEmail = table.Column<string>(type: "nvarchar(100)", nullable: false),
                     managerPhone = table.Column<string>(type: "nvarchar(100)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tb_m_manager_logistics", x => x.ManagerID);
+                    table.PrimaryKey("PK_tb_m_manager", x => x.ManagerID);
                     table.ForeignKey(
-                        name: "FK_tb_m_manager_logistics_tb_m_users_ManagerID",
+                        name: "FK_tb_m_manager_tb_m_user_ManagerID",
                         column: x => x.ManagerID,
-                        principalTable: "tb_m_users",
+                        principalTable: "tb_m_user",
                         principalColumn: "UserID");
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
-                name: "IX_tb_m_companies_companyID_companyEmail",
-                table: "tb_m_companies",
+                name: "IX_tb_m_company_companyID_companyEmail",
+                table: "tb_m_company",
                 columns: new[] { "companyID", "companyEmail" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_tb_m_manager_logistics_ManagerID_managerEmail",
-                table: "tb_m_manager_logistics",
+                name: "IX_tb_m_manager_ManagerID_managerEmail",
+                table: "tb_m_manager",
                 columns: new[] { "ManagerID", "managerEmail" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_tb_m_projects_ProjectID",
-                table: "tb_m_projects",
+                name: "IX_tb_m_project_ProjectID",
+                table: "tb_m_project",
                 column: "ProjectID",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_tb_m_projects_VendorID",
-                table: "tb_m_projects",
+                name: "IX_tb_m_project_VendorID",
+                table: "tb_m_project",
                 column: "VendorID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_tb_m_users_CompanyID",
-                table: "tb_m_users",
+                name: "IX_tb_m_user_CompanyID",
+                table: "tb_m_user",
                 column: "CompanyID",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_tb_m_users_UserID_Email",
-                table: "tb_m_users",
+                name: "IX_tb_m_user_UserID_Email",
+                table: "tb_m_user",
                 columns: new[] { "UserID", "Email" },
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_tb_m_vendors_VendorID",
-                table: "tb_m_vendors",
+                name: "IX_tb_m_vendor_VendorID",
+                table: "tb_m_vendor",
                 column: "VendorID",
                 unique: true);
         }
@@ -161,19 +164,19 @@ namespace SupplyManagement.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "tb_m_manager_logistics");
+                name: "tb_m_manager");
 
             migrationBuilder.DropTable(
-                name: "tb_m_projects");
+                name: "tb_m_project");
 
             migrationBuilder.DropTable(
-                name: "tb_m_users");
+                name: "tb_m_user");
 
             migrationBuilder.DropTable(
-                name: "tb_m_companies");
+                name: "tb_m_company");
 
             migrationBuilder.DropTable(
-                name: "tb_m_vendors");
+                name: "tb_m_vendor");
         }
     }
 }

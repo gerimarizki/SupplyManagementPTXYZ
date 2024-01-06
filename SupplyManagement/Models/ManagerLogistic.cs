@@ -2,14 +2,15 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace SupplyManagement.Model
+namespace SupplyManagement.Models
 {
-    [Table("tb_m_manager_logistics")]
+
+    [Table("tb_m_manager")]
     public class ManagerLogistic
     {
         [Key]
-        [Column("ManagerID", TypeName = "uniqueidentifier")]
-        public Guid ManagerID { get; set; }
+        [Column("ManagerID", TypeName = "int")]
+        public int ManagerID { get; set; }
         [Column("managerName", TypeName = "nvarchar(100)")]
         public string ManagerName { get; set; }
 

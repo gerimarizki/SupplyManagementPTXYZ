@@ -1,7 +1,7 @@
 ﻿using SupplyManagement.Contracts;
 using SupplyManagement.Data;
 using SupplyManagement.Helper.Enum;
-using SupplyManagement.Model;
+using SupplyManagement.Models;
 
 namespace SupplyManagement.Repositories
 {

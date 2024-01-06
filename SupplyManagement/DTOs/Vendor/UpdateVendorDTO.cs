@@ -4,19 +4,18 @@ namespace SupplyManagement.DTOs.Vendor
 {
     public class UpdateVendorDTO
     {
-        [Required]
-        public Guid VendorID { get; set; }
 
-        [Required]
+        public int VendorID { get; set; }
+
+
         public string VendorName { get; set; }
 
-        [Required]
         public string BusinessType { get; set; }
 
-        [Required]
+  
         public string CompanyType { get; set; }
 
-        [Required]
-        public Guid UserID { get; set; }
+  
+        public int UserID { get; set; }
     }
 }

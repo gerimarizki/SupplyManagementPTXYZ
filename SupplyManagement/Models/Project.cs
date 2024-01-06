@@ -3,20 +3,20 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Numerics;
 
-namespace SupplyManagement.Model
+namespace SupplyManagement.Models
 {
-    [Table("tb_m_projects")]
+    [Table("tb_m_project")]
     public class Project
     {
         [Key]
-        [Column("ProjectID", TypeName = "uniqueidentifier")]
-        public Guid ProjectID { get; set; }
+        [Column("ProjectID", TypeName = "int")]
+        public int ProjectID { get; set; }
 
         [Column("projectName", TypeName = "nvarchar(100)")]
         public string ProjectName { get; set; }
 
         // Foreign Key
-        public Guid VendorID { get; set; }
+        public int VendorID { get; set; }
 
         public Vendor Vendor { get; set; }
     }

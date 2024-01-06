@@ -1,6 +1,6 @@
 ﻿using SupplyManagement.Contracts;
 using SupplyManagement.Data;
-using SupplyManagement.Model;
+using SupplyManagement.Models;
 
 namespace SupplyManagement.Repositories
 {

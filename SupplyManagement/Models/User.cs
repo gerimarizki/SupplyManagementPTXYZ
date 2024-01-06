@@ -3,14 +3,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using SupplyManagement.Helper.Enum;
 
-namespace SupplyManagement.Model
+namespace SupplyManagement.Models
 {
-    [Table("tb_m_users")]
+    [Table("tb_m_user")]
     public class User
     {
         [Key]
-        [Column("UserID", TypeName = "uniqueidentifier")]
-        public Guid UserID { get; set; }
+        [Column("UserID", TypeName = "int")]
+        public int UserID { get; set; }
         [Column("Email", TypeName = "nvarchar(100)")]
         public string Email { get; set; }
         [Column("Password", TypeName = "nvarchar(100)")]
@@ -19,8 +19,8 @@ namespace SupplyManagement.Model
         public UserType UserType { get; set; }
 
         //Foreign Key
-        public Guid CompanyID { get; set; }
-        public Guid ManagerID { get; set; }
+        public int CompanyID { get; set; }
+        public int ManagerID { get; set; }
 
 
         //Cardinality

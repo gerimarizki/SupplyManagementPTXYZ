@@ -2,14 +2,15 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace SupplyManagement.Model
+namespace SupplyManagement.Models
 {
-    [Table("tb_m_vendors")]
+    [Table("tb_m_vendor")]
+
     public class Vendor
     {
         [Key]
-        [Column("VendorID", TypeName = "uniqueidentifier")]
-        public Guid VendorID { get; set; }
+        [Column("VendorID", TypeName = "int")]
+        public int VendorID { get; set; }
 
         [Column("vendorName", TypeName = "nvarchar(100)")]
         public string VendorName { get; set; }
@@ -21,7 +22,7 @@ namespace SupplyManagement.Model
         public string CompanyType { get; set; }
 
         // Foreign Key
-        public Guid UserID { get; set; }
+        public int UserID { get; set; }
 
         public User User { get; set; }
         public ICollection<Project> Projects { get; set; }
