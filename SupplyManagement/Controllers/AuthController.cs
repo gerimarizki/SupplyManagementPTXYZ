@@ -66,15 +66,15 @@ namespace SupplyManagement.Controllers
                 });
             }
 
-            if (loginResult == "Error")
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, new HandlerForResponse<LoginDTO>
-                {
-                    Code = StatusCodes.Status500InternalServerError,
-                    Status = HttpStatusCode.InternalServerError.ToString(),
-                    Message = "Error retrieving when creating token"
-                });
-            }
+            //if (loginResult == "Error")
+            //{
+            //    return StatusCode(StatusCodes.Status500InternalServerError, new HandlerForResponse<LoginDTO>
+            //    {
+            //        Code = StatusCodes.Status500InternalServerError,
+            //        Status = HttpStatusCode.InternalServerError.ToString(),
+            //        Message = "Error retrieving when creating token"
+            //    });
+            //}
 
             return Ok(new HandlerForResponse<string>
             {

@@ -58,12 +58,10 @@ namespace SupplyManagement.Data
                             u.ProjectID
                         }).IsUnique();
 
-            //Untuk Foto
             modelBuilder.Entity<Company>()
             .Property(p => p.CompanyPhoto)
-            .HasColumnType("varbinary(255)"); // Use varbinary for MySQL
+            .HasColumnType("varbinary(255)"); 
 
-            // Create Relation
             // Company - User (One to One)
             modelBuilder.Entity<User>()
                 .HasOne(user => user.Company)

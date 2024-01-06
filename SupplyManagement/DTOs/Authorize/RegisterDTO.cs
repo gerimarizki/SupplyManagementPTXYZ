@@ -16,7 +16,6 @@ namespace SupplyManagement.DTOs.Authorize
         public string CompanyPhoneNumber { get; set; }
         public string CompanyPhoto { get; set; }
 
-        // ini ubuat usernya
         [Required]
         public string Password { get; set; }
         [Required]

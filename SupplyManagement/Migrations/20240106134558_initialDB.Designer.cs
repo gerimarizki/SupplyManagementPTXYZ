@@ -10,8 +10,8 @@ using SupplyManagement.Data;
 namespace SupplyManagement.Migrations
 {
     [DbContext(typeof(BookingDbContext))]
-    [Migration("20240105214515_initialdb")]
-    partial class initialdb
+    [Migration("20240106134558_initialDB")]
+    partial class initialDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
